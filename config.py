@@ -9,3 +9,5 @@ class Config:
            'sqlite:///' + os.path.join(BASE_DIR, 'biblioteka.db')
    )
    SQLALCHEMY_TRACK_MODIFICATIONS = False
+
+config = Config()

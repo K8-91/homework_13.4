@@ -5,6 +5,7 @@ class Book(db.Model):
     __table_args__ = {'extend_existing': True}
     id = db.Column(db.Integer, primary_key=True)
     tittle = db.Column(db.String(100))
+    quantity = db.Column(db.Integer, nullable=True)
     author_id = db.Column(db.Integer, db.ForeignKey('author.id'))
     rental_id = db.Column(db.Integer, db.ForeignKey('rental.id'))
 
@@ -34,5 +35,10 @@ class Rental(db.Model):
     def __str__(self):
         return f"Book is {self.status}"
 
+
+class Shopping(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    product = db.Column(db.String(50))
+    quantity = db.Column(db.Integer)
 
 
