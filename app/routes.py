@@ -1,34 +1,37 @@
+from flask import Flask, request, redirect, url_for, render_template
 from app import app, db
-from flask import request, redirect, url_for, render_template
-from app.models import Book, Author, Rental, Shopping
-from app.forms import BookForm, ShoppingForm
+from app.models import Book, Author, Rental
+from app.forms import BookForm
 
 
-#@app.route("/todos/", methods=["GET", "POST"])
-#def book_list():
-    #if request.method == "POST":
-        #form = TodoForm(data=request.form)
-        #if form.validate_on_submit():
-            #new_book = Book()
-            #new_book.tittle = form.data.tittle
-            #new_book.author_name = form.data.author
-            #new_book.rental_status = form.data.status
-            #db.session.add(new_book)
-            #db.session.commit()
-        #return True
-    #return True
-
-@app.route("/shopping/", methods=["GET", "POST"])
-def shopping_list():
+@app.route("/books/", methods=["GET", "POST"])
+def book_list():
+    form = BookForm()
+    error = ""
     if request.method == "POST":
-        form = ShoppingForm(request.form)
-        new_list = Shopping()
         if form.validate_on_submit():
-            new_list.product = request.form("product")
-            new_list.quantity = request.form("quantity")
-            db.session.add(new_list)
+            new_book = Book(tittle=form.data["tittle"], quantity=form.data['quantity'], author_name=form.data['author'],
+                            rental_status=form.data['status'])
+            db.session.add(new_book)
             db.session.commit()
-        return redirect((url_for("shopping_list")))
-    return render_template("shopping.html", form=form)
+        return redirect((url_for("book_list")))
+    return render_template("book.html", form=form, books=Book.query.all(), error=error)
 
+
+#@app.route("books/edit/{{ int:id }}", method=["GET"])
+#def book_edit(id):
+    #book = Book.query.get(id)
+   # form = BookForm(data=book)
+   # if request.method == "POST":
+        #if form.validate_on_submit():
+            #new_book = Book(tittle=form.data["tittle"], quantity=form.data['quantity'], author_name=form.data["author"],
+                            #rental_status=form.data["status"])
+         #   db.session.add(new_book)
+        #    db.session.commit()
+     #   return redirect((url_for("book_list")))
+#    return render_template("book_id.html", form=form, id=id)
+
+
+if __name__ == "__main__":
+    app.run(debug=True)
 

@@ -2,26 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Tu tworzymy todo i widzimy listę</title>
+    <title>Szczegóły todo</title>
     <link rel="stylesheet" href={{ url_for('static', filename='style.css') }}>
 </head>
-<body>
-<h2>CDs list</h2>
-
-<table>
-    <thead>
-    <th> ID </th>
-    <th>Artist</th>
-    <th>Year of publication</th>
-    <th>CD Name</th>
-    <th>Favourite</th>
-    <th>Delete</th>
-    </thead>
-
-</table>
-<div>
-    <h2> Add new CD: </h2>
-    <form method="POST" action="/shopping/">
+<body class = "body_details">
+    <h2> Change: </h2>
+    <form method="POST" action="/books/edit/{{ Book.id }}/">
         {{ form.hidden_tag() }}
         <table>
             {% for field in form if field.widget.input_type != 'hidden' %}
@@ -31,8 +17,7 @@
                 </tr>
             {% endfor %}
         </table>
-        <input type="submit" value="Go">
+        <input type="submit" value="Update">
     </form>
-</div>
 </body>
 </html>

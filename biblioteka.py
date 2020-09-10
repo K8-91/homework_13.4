@@ -8,5 +8,5 @@ def make_shell_context():
        "Book": Book,
        "Author": Author,
        "Status_Enum": Status_Enum,
-       "Rental": Rental
+       "Rental": Rental,
    }
