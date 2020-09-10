@@ -10,9 +10,19 @@ def book_list():
     error = ""
     if request.method == "POST":
         if form.validate_on_submit():
-            author = Author.query.filter_by(name=form.data['author']).first()
+            all_authors_names = []
+            all_authors_results = Author.query.all()
+            for author in all_authors_results:
+                all_authors_names.append(author.name)
+            if form.data["author"] in all_authors_names:
+                pass
+            else:
+                new_author = Author(name=form.data["author"])
+                db.session.add(new_author)
+                db.session.commit()
+            author_from_form = Author.query.filter_by(name=form.data['author']).first()
             rental = Rental.query.filter_by(status=form.data['status']).first()
-            new_book = Book(tittle=form.data["tittle"], quantity=form.data['quantity'], author_id=author.id,
+            new_book = Book(tittle=form.data["tittle"], quantity=form.data['quantity'], author_id=author_from_form.id,
                             rental_id=rental.id)
             db.session.add(new_book)
             db.session.commit()
