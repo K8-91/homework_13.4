@@ -10,8 +10,10 @@ def book_list():
     error = ""
     if request.method == "POST":
         if form.validate_on_submit():
-            new_book = Book(tittle=form.data["tittle"], quantity=form.data['quantity'], author_name=form.data['author'],
-                            rental_status=form.data['status'])
+            author = Author.query.filter_by(name=form.data['author']).first()
+            rental = Rental.query.filter_by(status=form.data['status']).first()
+            new_book = Book(tittle=form.data["tittle"], quantity=form.data['quantity'], author_id=author.id,
+                            rental_id=rental.id)
             db.session.add(new_book)
             db.session.commit()
         return redirect((url_for("book_list")))
