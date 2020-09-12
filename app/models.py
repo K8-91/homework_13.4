@@ -45,3 +45,4 @@ class Book(db.Model):
     def get_rental_status(self):
         rental_status = Rental.query.filter_by(id=self.rental_id).first()
         return rental_status.status
+

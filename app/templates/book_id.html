@@ -2,12 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Szczegóły todo</title>
+    <title>Szczegóły book</title>
     <link rel="stylesheet" href={{ url_for('static', filename='style.css') }}>
 </head>
 <body class = "body_details">
     <h2> Change: </h2>
-    <form method="POST" action="/books/edit/{{ Book.id }}/">
+    <form method="POST" action="/books/edit/{{ book.id }}">
         {{ form.hidden_tag() }}
         <table>
             {% for field in form if field.widget.input_type != 'hidden' %}
