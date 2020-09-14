@@ -42,7 +42,6 @@ def book_edit(id):
         'status': rental.status,
         'csrf_token': 1234})
     if request.method == "POST":
-        print("kasia")
         if form.validate_on_submit():
             all_authors_names = []
             all_authors_results = Author.query.all()
@@ -63,6 +62,12 @@ def book_edit(id):
             db.session.commit()
         return redirect((url_for("book_list")))
     return render_template("book_id.html", form=form, id=id, book=book)
+
+@app.route("/books/<int:id>/delete", methods=["POST"])
+def book_delete(id):
+    book = Book.query.get(id=id)
+    db.session.delete(book)
+    db.session.commit()
 
 
 if __name__ == "__main__":
